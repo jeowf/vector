@@ -3,7 +3,7 @@
 
 namespace edb{
 
-	template < typename T, size_t SIZE=0 >
+	template < typename T, size_t SIZE=1 >
     class Vector {
         //=== Alias
         typedef T value_type;
@@ -12,80 +12,38 @@ namespace edb{
         typedef T& reference;
 
         public:
-            class iterator {
-                public: // iterator traits
+						template <typename T>
+            class Iterator {
+                public: // Iterator traits
                     typedef  std::ptrdiff_t                  difference_type;
                     typedef  T                               value_type;
                     typedef  T*                              pointer;
                     typedef  T&                              reference;
-                    typedef  std::bidirectional_iterator_tag iterator_category;
+                    typedef  std::bidirectional_Iterator_tag Iterator_category;
 
                     /// 2 in 1 Constructor (empty and single value).
-                    iterator( pointer ptr=nullptr ) : m_ptr( ptr )
-                    { /* empty */ }
+                    Iterator( pointer);
 
                     /// Destructor
-                    ~iterator() = default;
+                    ~Iterator();
 
                     /// Copy constructor
-                    iterator( const iterator& itr ) : m_ptr( itr.m_ptr )
-                    { /* empty */ }
+                    Iterator( const Iterator&);
 
                     /// Assign operator
-                    iterator& operator=( const iterator& rhs )
-                    {
-                        m_ptr = rhs.m_ptr;
-                    }
+                    Iterator& operator=( const Iterator&);
 
-                    reference operator* ( void ) const
-                    {
-                        return *m_ptr;
-                    }
+                    reference operator* ( void ) const;
                     // ++it
-                    iterator operator++()
-                    {
-                        return ++m_ptr;
-                    }
+                    Iterator operator++();
 
                     // it++
-                    iterator operator++( int )
-                    {
-                        // V. 1
-                        iterator temp( *this );
-                        ++m_ptr;
-                        return temp;
-
-                        // V. 2
-                        pointer temp2 = m_ptr;
-                        ++m_ptr;
-                        return iterator( temp2 );
-
-                        // V. 3
-                        return m_ptr++;
-
-                        // V. 4
-                        ++m_ptr;
-                        return m_ptr-1;
-                    }
+                    Iterator operator++( int );
                     // --it
-                    iterator operator--()
-                    {
-                        return --m_ptr;
-                    }
-                    iterator operator--( int )
-                    {
-                        iterator temp( *this );
-                        --m_ptr;
-                        return temp;
-                    }
-                    bool operator==( const iterator& rhs ) const
-                    {
-                        return m_ptr == rhs.m_ptr;
-                    }
-                    bool operator!=( const iterator& rhs ) const
-                    {
-                        return m_ptr != rhs.m_ptr;
-                    }
+                    Iterator operator--();
+                    Iterator operator--( int );
+                    bool operator==( const Iterator&) const;
+                    bool operator!=( const Iterator&) const;
 
                     /*
                     operator +=
@@ -97,20 +55,20 @@ namespace edb{
                 private:
                     pointer m_ptr;
             };
-            class const_iterator
+            class const_Iterator
             {
                 private:
             };
 
 
             /// Basic constructor
-            array( void )
-            {
+            Vector( void )
+
                 m_size = SIZE; // stores the array size.
             }
-            ~array( ) = default;
+            ~Vector( );
 
-            array( const array& original )
+            Vector( const array& original )
             {
                 // Copy all elements of original into 'this'.
                 std::copy( &original.m_data[0], &original.m_data[original.m_size],
@@ -118,7 +76,7 @@ namespace edb{
                 m_size = original.m_size;
             }
 
-            array( const std::initializer_list<T> & il )
+            Vector( const std::initializer_list<T> & il )
             {
                 // Copy all elements of original into 'this'.
                 std::copy( il.begin(), il.end(), &m_data[0] );
@@ -131,15 +89,15 @@ namespace edb{
                 m_size = il.size();
             }
 
-            iterator begin( void )
+            Iterator begin( void )
             {
-                return iterator( &m_data[0] );
-                //return iterator( m_data );
+                return Iterator( &m_data[0] );
+                //return Iterator( m_data );
             }
 
-            iterator end( void )
+            Iterator end( void )
             {
-                return iterator( &m_data[m_size] );
+                return Iterator( &m_data[m_size] );
             }
 
             reference operator[]( size_type pos )
@@ -165,7 +123,7 @@ namespace edb{
                 //return begin() == end();
             }
 
-            bool operator==( const array<T,SIZE>& rhs ) const 
+            bool operator==( const array<T,SIZE>& rhs ) const
             {
                 if( m_size != rhs.m_size ) return false;
                 return std::equal( &rhs.m_data[0], &rhs.m_data[m_size], &m_data[0] );
@@ -176,7 +134,7 @@ namespace edb{
             {
                 os << "[ ";
                 for( auto i(0u) ; i < a.m_size ; ++i )
-                    //for ( sc::array::iterator it = a.begin() ; it != a.end() ; ++it )
+                    //for ( sc::array::Iterator it = a.begin() ; it != a.end() ; ++it )
                     // std::cout << *it << " ";
                     os << a.m_data[i] << " ";
                 os << "]";
