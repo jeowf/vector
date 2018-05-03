@@ -1,155 +1,98 @@
 #ifndef VECTOR
 #define VECTOR
 
+#include "iterator.h"
+#include <iostream>
+
 namespace edb{
 
-	template < class T, size_t SIZE=1 >
-    class Vector {
+	template <class T>
+    class Vector{
     public:
-        //=== Alias
-        typedef T value_type;
-        typedef size_t size_type;
-        typedef T* pointer;
-        typedef T& reference;
+        const static size_type DEFAULT_SIZE = 0;
 
+        using iter   = edb::Iterator<T>;
+        using c_iter = edb::Iterator<const T>;
+        using c_ref  = const edb::Iterator<T>&;
+        using ref  = edb::Iterator<T>&;
+        using pointer  = edb::Iterator<T>*; // sei la?
+
+        // SPECIAL MEMBERS
+        Vector();
         
-    public:
-		template <class C>
-        class Iterator {
-
-        /// Alias
-        public: 
-            typedef  std::ptrdiff_t                  difference_type;
-            typedef  T                               value_type;
-            typedef  T*                              pointer;
-            typedef  T&                              reference;
-            //typedef  std::bidirectional_Iterator_tag Iterator_category;
+        ~Vector();
         
-        private:
-            pointer m_ptr;
-
-        public:
-            /// 2 in 1 Constructor (empty and single value).
-            Iterator( pointer);
-
-            // /// Destructor
-            // ~Iterator();
-
-            /// Copy constructor
-            Iterator( const Iterator&);
-
-            /// Assign operator
-            Iterator& operator=( const Iterator&);
-
-            reference operator* ( void ) const;
-            // ++it
-            Iterator operator++();
-
-            // it++
-            Iterator operator++( int );
-            // --it
-            Iterator operator--();
-            Iterator operator--( int );
-            bool operator==( const Iterator&) const;
-            bool operator!=( const Iterator&) const;
-
-            
-            //operator +=
-            //operator -=
-            //operator+
-            //operator-
-            
-
+        Vector (const Vector &);
         
-        };
-        class const_Iterator
-        {
-            private:
-        };
+        Vector (Vector &&);
 
-        
+        template <typename InputItr>
+        Vector ( InputItr, InputItr);
+
+        Vector & operator= (const Vector &);
+        Vector & operator= (Vector &);
+
+        // ITERATORS
+        iter begin( void );
+        iter end( void );
+        c_iter cbegin( void );
+        c_iter cend ( void );
+
+        // CAPACITY
+        size_type size( void ) const;
+        size_type capacity( void ) const;
+        bool empty ( void ) const;
+
+        void clear ( void );
+        void push_front ( c_ref );
+        void push_back ( c_ref );
+        void pop_front( void );
+        void pop_back( void );
+
+        iter insert(iter, c_ref);
+
+        template <typename InputItr>
+        iter insert(iter, InputItr, InputItr);
+
+        iter insert(iter, std::initializator_list <T>);
+
+        void reserve (size_type);
+
+        void shrink_to_fit ( void );
+
+        void assign (c_ref);
+        void assign (std::initializator_list <T>);
+
+        template <typename InputItr>
+        void assign (InputItr, InputItr);
+
+        iter erase(iter, iter);
+        iter erase (iter);
+
+        // ELEMENT ACCESS
+        c_ref back (void) const;
+        c_ref front (void) const;
+        c_ref operator[] (size_type) const;
+        ref operator[] (size_type);
+        c_ref at (size_type) const;
+        ref at (size_type);
+        pointer data ( void ); //qm é pointer
+        c_ref data (void) const;
+
+        // OPERATORS
+        bool operator==(const Vector & ) const;
+        bool operator!=(const Vector & ) const;
+
+        // FRIEND FUNCTIONS
+        friend std::ostream & operator<<( std::ostream & os_, const Vector<T> & v_ ); 
+        friend void swap( Vector<T> & first_, Vector<T> & second_ ); 
 
     private:
-        size_type m_size; //!< Stores the array size.
-        value_type *m_data; //!< The storage area.
+        size_type m_end;
+        size_type m_capacity;
+        T *m_storage;
 
-    public:
-        /// Basic constructor
-        Vector( void );
-        //~Vector( );
-
-        Vector( const Vector& original );
-
-        // Vector( const std::initializer_list<T> & il )
-        // {
-        //     // Copy all elements of original into 'this'.
-        //     std::copy( il.begin(), il.end(), &m_data[0] );
-        //     /*
-        //     auto i(0);
-        //     for ( const auto & e : il )
-        //         m_data[i++] = e;
-        //         */
-
-        //     m_size = il.size();
-        // }
-
-        // Iterator begin( void )
-        // {
-        //     return Iterator( &m_data[0] );
-        //     //return Iterator( m_data );
-        // }
-
-        // Iterator end( void )
-        // {
-        //     return Iterator( &m_data[m_size] );
-        // }
-
-        // reference operator[]( size_type pos )
-        // {
-        //     return m_data[pos];
-        // }
-        // reference at( size_type pos )
-        // {
-        //     if ( pos < 0 or pos >= m_size )
-        //         throw std::out_of_range("[array::at()] Acesso fora dos limites do vetor." );
-
-        //     return m_data[pos];
-        // }
-
-        // size_type size( void ) const
-        // {
-        //     return m_size;
-        // }
-
-        // bool empty( void ) const
-        // {
-        //     return m_size == 0;
-        //     //return begin() == end();
-        // }
-
-        // bool operator==( const array<T,SIZE>& rhs ) const
-        // {
-        //     if( m_size != rhs.m_size ) return false;
-        //     return std::equal( &rhs.m_data[0], &rhs.m_data[m_size], &m_data[0] );
-        // }
-
-        // // Copy constructor
-        // friend std::ostream& operator<<( std::ostream& os, const sc::array<T,SIZE>& a )
-        // {
-        //     os << "[ ";
-        //     for( auto i(0u) ; i < a.m_size ; ++i )
-        //         //for ( sc::array::Iterator it = a.begin() ; it != a.end() ; ++it )
-        //         // std::cout << *it << " ";
-        //         os << a.m_data[i] << " ";
-        //     os << "]";
-        //     return os;
-        // }
-
-        //private:
-            
     };
-
-}
 
 #include "vector.inl"
 
