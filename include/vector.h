@@ -4,33 +4,34 @@
 #include "iterator.h"
 #include <iostream>
 
-namespace edb{
+namespace sc{
 
 	template <class T>
-    class Vector{
+    class vector{
+    	/*
     public:
         const static size_type DEFAULT_SIZE = 0;
 
-        using iter   = edb::Iterator<T>;
-        using c_iter = edb::Iterator<const T>;
-        using c_ref  = const edb::Iterator<T>&;
-        using ref  = edb::Iterator<T>&;
-        using pointer  = edb::Iterator<T>*; // sei la?
+        using iter   = sc::Iterator<T>;
+        using c_iter = sc::Iterator<const T>;
+        using c_ref  = const sc::Iterator<T>&;
+        using ref  = sc::Iterator<T>&;
+        using pointer  = sc::Iterator<T>*; // sei la?
 
         // SPECIAL MEMBERS
-        Vector();
+        vector();
         
-        ~Vector();
+        ~vector();
         
-        Vector (const Vector &);
+        vector (const vector &);
         
-        Vector (Vector &&);
+        vector (vector &&);
 
         template <typename InputItr>
-        Vector ( InputItr, InputItr);
+        vector ( InputItr, InputItr);
 
-        Vector & operator= (const Vector &);
-        Vector & operator= (Vector &);
+        vector & operator= (const vector &);
+        vector & operator= (vector &);
 
         // ITERATORS
         iter begin( void );
@@ -80,20 +81,20 @@ namespace edb{
         c_ref data (void) const;
 
         // OPERATORS
-        bool operator==(const Vector & ) const;
-        bool operator!=(const Vector & ) const;
+        bool operator==(const vector & ) const;
+        bool operator!=(const vector & ) const;
 
         // FRIEND FUNCTIONS
-        friend std::ostream & operator<<( std::ostream & os_, const Vector<T> & v_ ); 
-        friend void swap( Vector<T> & first_, Vector<T> & second_ ); 
+        friend std::ostream & operator<<( std::ostream & os_, const vector<T> & v_ ); 
+        friend void swap( vector<T> & first_, vector<T> & second_ ); 
 
     private:
         size_type m_end;
         size_type m_capacity;
         T *m_storage;
-
+*/
     };
 
-#include "vector.inl"
+//#include "vector.inl"
 
 #endif
