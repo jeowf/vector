@@ -8,7 +8,7 @@ namespace sc{
 
 	template <class T>
     class vector{
-    	/*
+    	
     public:
         const static size_type DEFAULT_SIZE = 0;
 
@@ -92,9 +92,9 @@ namespace sc{
         size_type m_end;
         size_type m_capacity;
         T *m_storage;
-*/
+
     };
 
-//#include "vector.inl"
+#include "vector.inl"
 
 #endif
