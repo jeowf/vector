@@ -6,12 +6,14 @@ int main(){
 	//sc::MyIterator<const int> it();
 
 	{
-		sc::vector<int> v();
+		std::cout << ">>> bool empty()\n";
 
-		//int a = 2;
+		sc::vector<int> v;
+		std::cout << v.empty() << std::endl;
 
-		
-		std::cout << v.empty(); << std::endl;
+		v.push_back(1);
+
+		std::cout << v.empty() << std::endl;
 	}
 	
 

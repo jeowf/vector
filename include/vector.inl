@@ -25,7 +25,7 @@ namespace sc {
 
     template <typename T>
     bool vector<T>::empty ( void ) const{
-        return (m_storage == 0);
+        return (m_capacity == 0);
     }
 
     template <typename T>
