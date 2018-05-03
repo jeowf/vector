@@ -1,102 +1,68 @@
 #include <vector.h>
 
-/// Alias
-#define ITER_SIG template <class C>
-#define VEC_SIG template <class T, size_t SIZE>
+namespace sc {
 
-//VEC_SIG ITER_SIG using Iter = typename Vector<T, SIZE>::template Iterator<C>;
+    template <typename T>
+    vector<T>::vector( void ) : m_end(DEFAULT_SIZE), 
+                                m_capacity(DEFAULT_SIZE), 
+                                m_storage(new T[DEFAULT_SIZE]) { }
+    
+    template <typename T>
+    vector<T>::~vector( void ){
+        for (size_type i = 0; i < m_capacity; i++)
+            m_storage[i].~T();
 
-namespace edb {
-    ///ITERATOR
-
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C>::Iterator( pointer ptr ) : m_ptr( ptr ) {}
-
-    // /// Destructor
-    // Vector::Iterator::~Iterator() = default;
-
-    /// Copy constructor
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C>::Iterator( const Iterator& itr ) : m_ptr( itr.m_ptr )
-    { /* empty */ }
-
-    /// Assign operator
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C>&  Vector<T, SIZE>::Iterator<C>::operator=( const Iterator& rhs ) {
-      m_ptr = rhs.m_ptr;
+        delete [] m_storage;
     }
 
-    VEC_SIG ITER_SIG
-    typename Vector<T, SIZE>::Iterator<C>::reference Vector<T, SIZE>::Iterator<C>::operator* ( void ) const
-    {
-      return *m_ptr;
+    template <typename T>
+    vector<T>::vector( const vector& other ) {
+        // Copy all elements of other into 'this'.
+        std::copy( &other.m_storage[0], &other.m_storage[other.m_end],
+                 &m_storage[0] );
+        m_end = other.m_end;
     }
 
-    // ++it
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C>::Iterator Vector<T, SIZE>::Iterator<C>::operator++()
-    {
-      return ++m_ptr;
+    template <typename T>
+    bool vector<T>::empty ( void ) const{
+        return (m_storage == 0);
     }
 
-    // it++
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C> Vector<T, SIZE>::Iterator<C>::operator++( int )
-    {
-      // V. 1
-      Iterator temp( *this );
-      ++m_ptr;
-      return temp;
+    template <typename T>
+    void vector<T>::push_back (c_ref value){
+        if ( empty() )
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity * 2);
 
-      // V. 2
-      pointer temp2 = m_ptr;
-      ++m_ptr;
-      return Iterator( temp2 );
-
-      // V. 3
-      return m_ptr++;
-
-      // V. 4
-      ++m_ptr;
-      return m_ptr-1;
+        m_storage[m_end++] = value;
     }
 
-    // --it
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C> Vector<T, SIZE>::Iterator<C>::operator--()
-    {
-      return --m_ptr;
+    template <typename T>
+    void vector<T>::reserve (size_type new_cap){
+        T* temp = new T[new_cap];
+
+        for (size_type i = 0; i < m_end; i++)
+            temp[i] = m_storage[i];
+        
+        delete [] m_storage;
+
+        m_storage = temp;
     }
 
-    VEC_SIG ITER_SIG
-    Vector<T, SIZE>::Iterator<C> Vector<T, SIZE>::Iterator<C>::operator--( int )
-    {
-      Iterator temp( *this );
-      --m_ptr;
-      return temp;
+    template <typename T>
+    typename vector<T>::c_ref vector<T>::operator[] (size_type pos) const{
+        return m_storage[pos];
     }
 
-    VEC_SIG ITER_SIG
-    bool Vector<T, SIZE>::Iterator<C>::operator==( const Iterator& rhs ) const
-    {
-      return m_ptr == rhs.m_ptr;
-    }
-
-    VEC_SIG ITER_SIG
-    bool Vector<T, SIZE>::Iterator<C>::operator!=( const Iterator& rhs ) const
-    {
-      return m_ptr != rhs.m_ptr;
+    template <typename T>
+    typename vector<T>::ref vector<T>::operator[] (size_type pos){
+        return m_storage[pos];
     }
 
 
-  // /// VECTOR
-  // Vector::Vector( void )
 
-  //     m_size = SIZE; // stores the array size.
-  // }
-  // Vector::~Vector( );
-
-  // Vector::Vector( const array& original )
+  // vector::vector( const array& original )
   // {
   //     // Copy all elements of original into 'this'.
   //     std::copy( &original.m_data[0], &original.m_data[original.m_size],
@@ -104,7 +70,7 @@ namespace edb {
   //     m_size = original.m_size;
   // }
 
-  // Vector( const std::initializer_list<T> & il )
+  // vector( const std::initializer_list<T> & il )
   // {
   //     // Copy all elements of original into 'this'.
   //     std::copy( il.begin(), il.end(), &m_data[0] );
@@ -169,15 +135,15 @@ namespace edb {
   //     return os;
   // }
 
-    VEC_SIG
-    Vector<T, SIZE>::Vector( void ) : m_size (SIZE) { }
+    // VEC_SIG
+    // vector<T, SIZE>::vector( void ) : m_size (SIZE) { }
 
-    VEC_SIG
-    Vector<T, SIZE>::Vector( const Vector& original ) {
-        // Copy all elements of original into 'this'.
-        std::copy( &original.m_data[0], &original.m_data[original.m_size],
-                   &m_data[0] );
-        m_size = original.m_size;
-    }
+    // VEC_SIG
+    // vector<T, SIZE>::vector( const vector& original ) {
+    //     // Copy all elements of original into 'this'.
+    //     std::copy( &original.m_data[0], &original.m_data[original.m_size],
+    //                &m_data[0] );
+    //     m_size = original.m_size;
+    // }
             
 }

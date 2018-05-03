@@ -1,12 +1,16 @@
 #ifndef VECTOR
 #define VECTOR
 
-#include "iterator.h"
 #include <iostream>
+//#include <memory>
+#include <stdexcept>
+
+
+#include "iterator.h"
 
 namespace sc{
-
-	template <class T>
+    
+    template <typename T>
     /*! @class vector
      *
      * @brief A class that manages actions on a dinamic list
@@ -14,14 +18,15 @@ namespace sc{
     class vector{
     	
     public:
-        const static size_type DEFAULT_SIZE = 0;/*!< Variable to storage the default size of vector */ 
+        using size_type = size_t;                   /*!< aaaa */
 
-        using iter   = sc::Iterator<T>;/*!< Variable to store a iterator */ 
-        using c_iter = sc::Iterator<const T>;/*!< Variable to store an iterator that cannot be modified */ 
-        using c_ref  = const sc::Iterator<T>&;/*!< Variable to store an iterator reference that cannot be modified  */ 
-        using ref  = sc::Iterator<T>&;/*!<  Variable to store an iterator reference*/ 
-        // sei la?
-        using pointer  = sc::Iterator<T>*; /*!< Vamos descobrir */ 
+        const static size_type DEFAULT_SIZE = 0;    /*!< Variable to storage the default size of vector */ 
+
+        using iter     = sc::MyIterator<T>;         /*!< Variable to store a iterator */ 
+        using c_iter   = sc::MyIterator<const T>;   /*!< Variable to store an iterator that cannot be modified */ 
+        using ref      = T&;                        /*!< Variable to store an iterator reference*/ 
+        using c_ref    = const T&;                  /*!< Variable to store an iterator reference that cannot be modified  */ 
+        using pointer  = sc::MyIterator<T>*;        /*!< Vamos descobrir */ 
 
         // SPECIAL MEMBERS
 
@@ -29,18 +34,16 @@ namespace sc{
         * @brief Vector Constructor
         *
         * Initializes the vector with a empty list 
-        *   
         */
-
-        vector();
+        vector( void );
         
         /*! 
         * @brief Vector Destructor
         *
         * Destructs the list
-        *   
         */
-        ~vector();
+        ~vector( void );
+
         /*! 
         * @brief Vector Constructor
         *
@@ -49,6 +52,7 @@ namespace sc{
         *@param other vector object   
         */
         vector (const vector &);
+
         /*! 
         * @brief Vector Constructor
         *
@@ -56,7 +60,9 @@ namespace sc{
         *
         *@param arg vector object   
         */
-        vector (vector &&);
+    //  vector (vector &&);
+
+
         /*! 
         * @brief Vector Constructor
         *
@@ -65,8 +71,9 @@ namespace sc{
         *@param first begin of range
         *@param last end of range    
         */
-        template <typename InputItr>
-        vector ( InputItr, InputItr);
+        //template <typename InputItr>
+        
+    //vector ( InputItr, InputItr);
         /*! 
         * @brief '=' Overload
         *
@@ -76,7 +83,8 @@ namespace sc{
         *
         * @return Return the new content from other
         */ 
-        vector & operator= (const vector &);
+        
+    //vector & operator= (const vector &);
         /*! 
         * @brief '=' Overload
         *
@@ -86,7 +94,7 @@ namespace sc{
         *
         * @return Return the new content from other
         */ 
-        vector & operator= (vector &);
+        ///vector & operator= (vector &);
 
         // ITERATORS
 
@@ -97,7 +105,7 @@ namespace sc{
         *
         * @return Returns an iterator pointing to the first item in the list
         */ 
-        iter begin( void );
+        //iter begin( void );
         /*! 
         * @brief End
         *
@@ -105,7 +113,7 @@ namespace sc{
         *
         * @return Returns an iterator pointing to the end mark in the list
         */ 
-        iter end( void );
+        //iter end( void );
         /*! 
         * @brief Const Begin
         *
@@ -113,7 +121,7 @@ namespace sc{
         *
         * @return Returns a constant iterator pointing to the first item in the list
         */ 
-        c_iter cbegin( void );
+        //c_iter cbegin( void );
         /*! 
         * @brief Const End
         *
@@ -121,7 +129,7 @@ namespace sc{
         *
         * @return returns a constant iterator pointing to the end mark in the list
         */  
-        c_iter cend ( void );
+        //c_iter cend ( void );
 
         // CAPACITY
 
@@ -132,7 +140,7 @@ namespace sc{
         *
         * @return Return the number of elements in the container.
         */ 
-        size_type size( void ) const;
+        //size_type size( void ) const;
 
         /*! 
         * @brief Capacity
@@ -141,7 +149,8 @@ namespace sc{
         *
         * @return Return the internal storage capacity of the array
         */ 
-        size_type capacity( void ) const;
+        //size_type capacity( void ) const;
+        
         /*! 
         * @brief Empty
         *
@@ -156,7 +165,7 @@ namespace sc{
         *
         * Remove all elements from the container
         */ 
-        void clear ( void );
+       // void clear ( void );
         /*! 
         * @brief Push Front
         *
@@ -165,7 +174,8 @@ namespace sc{
         * @param value value to be added
         *
         */ 
-        void push_front ( c_ref );
+        //void push_front ( c_ref );
+        
         /*! 
         * @brief Push Back
         *
@@ -175,20 +185,21 @@ namespace sc{
         *
         */  
         void push_back ( c_ref );
+
         /*! 
         * @brief Pop Front
         *
         * Removes the object at the front of the list
         *
         */  
-        void pop_front( void );
+        //void pop_front( void );
         /*! 
         * @brief Pop back
         *
         * Removes the object at the endif of the list
         *
         */ 
-        void pop_back( void );
+        //void pop_back( void );
 
         /*! 
         * @brief Insert
@@ -201,7 +212,7 @@ namespace sc{
         * @return Returns an iterator to the position of the inserted item.
         */
 
-        iter insert(iter, c_ref);
+        //iter insert(iter, c_ref);
 
         /*! 
         * @brief Insert
@@ -214,8 +225,8 @@ namespace sc{
         *
         * @return Returns an iterator to the position of the inserted item
         */
-        template <typename InputItr>
-        iter insert(iter, InputItr, InputItr);
+        //template <typename InputItr>
+        //iter insert(iter, InputItr, InputItr);
 
         /*! 
         * @brief Insert
@@ -228,7 +239,7 @@ namespace sc{
         * @return Returns an iterator to the position of the inserted item
         */
 
-        iter insert(iter, std::initializator_list <T>);
+        //iter insert(iter, std::initializator_list <T>);
 
         /*! 
         * @brief Reserve
@@ -240,6 +251,7 @@ namespace sc{
         */
 
         void reserve (size_type);
+
         /*! 
         * @brief Shrink to Fit
         *
@@ -248,7 +260,7 @@ namespace sc{
         * @param other vector object 
         *
         */
-        void shrink_to_fit ( void );
+        //void shrink_to_fit ( void );
         /*! 
         * @brief Assign
         *
@@ -256,7 +268,7 @@ namespace sc{
         *
         * @param count number os values 
         */
-        void assign (c_ref);
+        //void assign (c_ref);
 
         /*! 
         * @brief Assign
@@ -265,7 +277,7 @@ namespace sc{
         *
         * @param ilist initializer list
         */
-        void assign (std::initializator_list <T>);
+        //void assign (std::initializator_list <T>);
         /*! 
         * @brief Assign
         *
@@ -274,8 +286,8 @@ namespace sc{
         * @param first begin of range
         * @param last end of range
         */
-        template <typename InputItr>
-        void assign (InputItr, InputItr);
+        //template <typename InputItr>
+        //void assign (InputItr, InputItr);
            /*! 
         * @brief Erase
         *
@@ -286,7 +298,7 @@ namespace sc{
         *
         * @return Return the iterator for the next element valid
         */
-        iter erase(iter, iter);
+       // iter erase(iter, iter);
                    /*! 
         * @brief Erase
         *
@@ -296,7 +308,7 @@ namespace sc{
         *
         * @return Returns an iterator to the element that follows pos before the call.
         */
-        iter erase (iter);
+        //iter erase (iter);
 
         // ELEMENT ACCESS
 
@@ -307,7 +319,7 @@ namespace sc{
         *
         * @return Returns the object at the end of the list.
         */
-        c_ref back (void) const;
+        //c_ref back (void) const;
         /*! 
         * @brief Front
         *
@@ -315,7 +327,7 @@ namespace sc{
         *
         * @return Returns the object at the beginning of the list.
         */
-        c_ref front (void) const;
+        //c_ref front (void) const;
         /*! 
         * @brief '[]' Overload
         *
@@ -325,6 +337,7 @@ namespace sc{
         *
         * @return Returns the constant object at the index pos in the array,with no bounds-checking.
         */
+
         c_ref operator[] (size_type) const;
         /*! 
         * @brief '[]' Overload
@@ -335,6 +348,7 @@ namespace sc{
         *
         * @return Returns the object at the index pos in the array, with no bounds-checking.
         */
+        
         ref operator[] (size_type);
         /*! 
         * @brief At
@@ -345,7 +359,7 @@ namespace sc{
         *
         * @return Returns the constant object at the index pos in the array, with bounds-checking.
         */
-        c_ref at (size_type) const;
+        //c_ref at (size_type) const;
         /*! 
         * @brief At
         *
@@ -355,21 +369,21 @@ namespace sc{
         *
         * @return Returns the object at the index pos in the array,with  bounds-checking.
         */
-        ref at (size_type);
+        //ref at (size_type);
                    /*! 
         * @brief Data
         *
         * Debbug
         *
         */
-        pointer data ( void ); //qm é pointer
+        //pointer data ( void ); //qm é pointer
                    /*! 
         * @brief Data
         *
         * Debbug
         *
         */
-        c_ref data (void) const;
+        //c_ref data (void) const;
 
         // OPERATORS
         /*! 
@@ -381,7 +395,7 @@ namespace sc{
         *
         * @return Return true if  two vectors are equals
         */
-        bool operator==(const vector & ) const;
+        //bool operator==(const vector & ) const;
         /*! 
         * @brief '!=' Overload
         *
@@ -391,7 +405,7 @@ namespace sc{
         *
         * @return Return true if  two vectors are differents
         */
-        bool operator!=(const vector & ) const;
+        //bool operator!=(const vector & ) const;
 
         // FRIEND FUNCTIONS
 
@@ -406,7 +420,7 @@ namespace sc{
         * @return Return ostream output stream
         */
 
-        friend std::ostream & operator<<( std::ostream & os_, const vector<T> & v_ );
+        //friend std::ostream & operator<<( std::ostream & os_, const vector<T> & v_ );
 
         /*! 
         * @brief Swap
@@ -419,7 +433,7 @@ namespace sc{
         * @return Return true if  two vectors are differents
         */ 
 
-        friend void swap( vector<T> & first_, vector<T> & second_ ); 
+        //friend void swap( vector<T> & first_, vector<T> & second_ ); 
 
     private:
         size_type m_end;/*!< Variable to storage the end of vector */ 
@@ -427,6 +441,7 @@ namespace sc{
         T *m_storage;/*!< Variable to storage the values */ 
 
     };
+}
 
 #include "vector.inl"
 
