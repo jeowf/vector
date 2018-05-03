@@ -9,7 +9,7 @@ namespace sc {
 	MyIterator<T>::MyIterator(T* ptr) : current(ptr){ }
 
 	template <typename T>
-	const typename MyIterator<T>::T& MyIterator<T>::operator*( void ) const{
+	const T& MyIterator<T>::operator*( void ) const{
 		return *current;
 	}
 
@@ -48,7 +48,5 @@ namespace sc {
 	bool MyIterator<T>::operator!=( const MyIterator& rhs ) const {
 	    return current != rhs.current;
 	}
-
-
 
 }
