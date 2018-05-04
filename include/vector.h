@@ -405,7 +405,7 @@ namespace sc{
         *
         * @return Return true if  two vectors are differents
         */
-        //bool operator!=(const vector & ) const;
+        bool operator!=(const vector & ) const;
 
         // FRIEND FUNCTIONS
 

@@ -97,6 +97,34 @@ namespace sc {
       }
     }
 
+    template <typename T>
+    bool vector<T>::operator== (const vector & v) const{
+      if( this->m_capacity != v.m_capacity){
+           return false;
+      }else{
+        for (int i = 0; i < this->m_capacity; i++){
+          if (this->m_storage[i] != v.m_storage[i]){
+            return false;
+          } 
+        }
+      }          
+      return true;
+    }
+
+    template <typename T>
+    bool vector<T>::operator!= (const vector & v) const{
+      if( this->m_capacity != v.m_capacity){
+           return true;
+      }else{
+        for (int i = 0; i < this->m_capacity; i++){
+          if (this->m_storage[i] != v.m_storage[i]){
+            return true;
+          } 
+        }
+      }          
+      return false;
+    }
+
   // vector::vector( const array& original )
   // {
   //     // Copy all elements of original into 'this'.

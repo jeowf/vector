@@ -6,7 +6,7 @@ int main(){
 	//sc::MyIterator<const int> it();
 
 	{
-		std::cout << ">>> At()\n";
+		std::cout << ">>> ==()\n";
 
 		sc::vector<int> v;
 		sc::vector<int> s;
@@ -20,7 +20,9 @@ int main(){
 		s.push_back(2);
 		s.push_back(3);
 
-		std::cout << v.at(1) << std::endl;
+		bool a = s != v;
+
+		std::cout << a << std::endl;
 	}
 	
 
