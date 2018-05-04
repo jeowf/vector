@@ -74,27 +74,28 @@ namespace sc{
         //template <typename InputItr>
         
     //vector ( InputItr, InputItr);
+
         /*! 
         * @brief '=' Overload
         *
         * Overload '=' operator to replace the content with the copy of the content of other
         *
-        * @param other const vector object 
+        * @param rhs const vector object 
         *
         * @return Return the new content from other
         */ 
-        
-    //vector & operator= (const vector &);
+        vector & operator= (const vector &);
+
         /*! 
         * @brief '=' Overload
         *
         * Overload '=' operator to replace the content with the copy of the alterable content of other
         *
-        * @param other vector object 
+        * @param rhs vector object 
         *
         * @return Return the new content from other
         */ 
-        ///vector & operator= (vector &);
+        vector & operator= (vector &);
 
         // ITERATORS
 
@@ -140,7 +141,7 @@ namespace sc{
         *
         * @return Return the number of elements in the container.
         */ 
-        //size_type size( void ) const;
+        size_type size( void ) const;
 
         /*! 
         * @brief Capacity
@@ -149,7 +150,7 @@ namespace sc{
         *
         * @return Return the internal storage capacity of the array
         */ 
-        //size_type capacity( void ) const;
+        size_type capacity( void ) const;
         
         /*! 
         * @brief Empty
@@ -174,7 +175,7 @@ namespace sc{
         * @param value value to be added
         *
         */ 
-        //void push_front ( c_ref );
+        void push_front ( c_ref );
         
         /*! 
         * @brief Push Back
@@ -192,14 +193,15 @@ namespace sc{
         * Removes the object at the front of the list
         *
         */  
-        //void pop_front( void );
+        void pop_front( void );
+        
         /*! 
         * @brief Pop back
         *
         * Removes the object at the endif of the list
         *
         */ 
-        //void pop_back( void );
+        void pop_back( void );
 
         /*! 
         * @brief Insert
@@ -420,7 +422,8 @@ namespace sc{
         * @return Return ostream output stream
         */
 
-        //friend std::ostream & operator<<( std::ostream & os_, const vector<T> & v_ );
+        template <typename U>
+        friend std::ostream & operator<<( std::ostream & os_, const vector<T> & v_ );
 
         /*! 
         * @brief Swap

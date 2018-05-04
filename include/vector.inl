@@ -24,8 +24,54 @@ namespace sc {
     }
 
     template <typename T>
+    vector<T>& vector<T>::operator= (const vector & rhs){
+        reserve(rhs.m_capacity);
+
+        for (size_type i = 0; i < m_capacity; i++)
+            m_storage[i] = rhs.m_storage[i];
+
+        return *this;
+    }
+
+    template <typename T>
+    vector<T>& vector<T>::operator= (vector & rhs){
+        reserve(rhs.m_capacity);
+
+        for (size_type i = 0; i < m_capacity; i++)
+            m_storage[i] = rhs.m_storage[i];
+
+        return *this;
+    }
+
+    template <typename T>
+    typename vector<T>::size_type vector<T>::size( void ) const{
+        return m_end;
+    }
+
+    template <typename T>
+    typename vector<T>::size_type vector<T>::capacity( void ) const{
+        return m_capacity;
+    }
+
+    template <typename T>
     bool vector<T>::empty ( void ) const{
         return (m_capacity == 0);
+    }
+
+    template <typename T>
+    void vector<T>::push_front (c_ref value){
+        if ( empty() )
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity * 2);
+
+        // move os elementos para a frente do vetor
+        for (size_type i = m_end+1; i > 0; i--){
+            m_storage[i] = m_storage[i - 1];
+        }
+
+        m_storage[0] = value;
+        m_end++;
     }
 
     template <typename T>
@@ -39,6 +85,27 @@ namespace sc {
     }
 
     template <typename T>
+    void vector<T>::pop_front( void ){
+        if (m_end == 0)
+            throw std::runtime_error("Stack is empty!");
+
+        for (size_type i = 0; i < m_end-1; i++)
+            m_storage[i] = m_storage[i+1];
+
+        m_storage[m_end-1].~T();
+        m_end--;
+        
+    }
+
+    template <typename T>
+    void vector<T>::pop_back( void ){
+        if (m_end == 0)
+            throw std::runtime_error("Stack is empty!");
+        m_storage[m_end-1].~T();
+        m_end--;
+    }
+
+    template <typename T>
     void vector<T>::reserve (size_type new_cap){
         T* temp = new T[new_cap];
 
@@ -47,6 +114,7 @@ namespace sc {
         
         delete [] m_storage;
 
+        m_capacity = new_cap;
         m_storage = temp;
     }
 
@@ -145,5 +213,18 @@ namespace sc {
     //                &m_data[0] );
     //     m_size = original.m_size;
     // }
+
+    template <typename U>
+    std::ostream & operator<<( std::ostream & os_, const vector<U> & v_ ){
+        std::cout << "[ ";
+
+        for (typename vector<U>::size_type i = 0; i < v_.size(); i++)
+            std::cout << v_[i] << " ";
+        std::cout << "]";
+
+        return os_;
+
+    }
+
             
 }
