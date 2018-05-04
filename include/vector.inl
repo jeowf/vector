@@ -48,6 +48,17 @@ namespace sc {
         delete [] m_storage;
 
         m_storage = temp;
+        m_capacity = new_cap;
+    }
+
+    template <typename T>
+    typename vector<T>::c_ref vector<T>::back (void) const{
+         return m_storage[m_end - 1];
+    }
+
+    template <typename T>
+    typename vector<T>::c_ref vector<T>::front (void) const{
+         return m_storage[0];
     }
 
     template <typename T>
@@ -60,7 +71,31 @@ namespace sc {
         return m_storage[pos];
     }
 
+    template <typename T>
+    typename vector<T>::c_ref vector<T>::at (size_type pos) const{
+      if(empty() == true){
+          throw std::runtime_error("Stack is empty");
+      }
+      else if(pos < 0 or pos > m_end){
+         throw std::runtime_error("Index out of range");
+      }
+      else{
+         return m_storage[pos];
+      }
+    }
 
+    template <typename T>
+    typename vector<T>::ref vector<T>::at (size_type pos){
+      if(empty()){
+        throw std::runtime_error("Stack is empty");
+      }
+      else if(pos < 0 or pos > m_end){
+        throw std::runtime_error("Index out of range");
+      }
+      else{
+        return m_storage[pos];
+      }
+    }
 
   // vector::vector( const array& original )
   // {

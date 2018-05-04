@@ -255,7 +255,7 @@ namespace sc{
         /*! 
         * @brief Shrink to Fit
         *
-        * Overload '=' operator to replace the content with the copy of the content of other
+        * Requests the removal of unused capacity
         *
         * @param other vector object 
         *
@@ -319,7 +319,7 @@ namespace sc{
         *
         * @return Returns the object at the end of the list.
         */
-        //c_ref back (void) const;
+        c_ref back (void) const;
         /*! 
         * @brief Front
         *
@@ -327,7 +327,7 @@ namespace sc{
         *
         * @return Returns the object at the beginning of the list.
         */
-        //c_ref front (void) const;
+        c_ref front (void) const;
         /*! 
         * @brief '[]' Overload
         *
@@ -359,7 +359,7 @@ namespace sc{
         *
         * @return Returns the constant object at the index pos in the array, with bounds-checking.
         */
-        //c_ref at (size_type) const;
+        c_ref at (size_type) const;
         /*! 
         * @brief At
         *
@@ -369,7 +369,7 @@ namespace sc{
         *
         * @return Returns the object at the index pos in the array,with  bounds-checking.
         */
-        //ref at (size_type);
+        ref at (size_type);
                    /*! 
         * @brief Data
         *
@@ -395,7 +395,7 @@ namespace sc{
         *
         * @return Return true if  two vectors are equals
         */
-        //bool operator==(const vector & ) const;
+        bool operator==(const vector & ) const;
         /*! 
         * @brief '!=' Overload
         *
