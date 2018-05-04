@@ -213,7 +213,7 @@ namespace sc{
         * @return Returns an iterator to the position of the inserted item.
         */
 
-        //iter insert(iter, c_ref);
+        iter insert(iter, c_ref);
 
         /*! 
         * @brief Insert
@@ -226,8 +226,8 @@ namespace sc{
         *
         * @return Returns an iterator to the position of the inserted item
         */
-        //template <typename InputItr>
-        //iter insert(iter, InputItr, InputItr);
+        template <typename InputItr>
+        iter insert(iter, InputItr, InputItr);
 
         /*! 
         * @brief Insert
@@ -240,7 +240,7 @@ namespace sc{
         * @return Returns an iterator to the position of the inserted item
         */
 
-        //iter insert(iter, std::initializator_list <T>);
+        iter insert(iter, std::initializer_list <T>);
 
         /*! 
         * @brief Reserve

@@ -9,18 +9,23 @@ int main(){
 		std::cout << ">>> FIT()\n";
 
 		sc::vector<int> v;
-		
+
 
 		v.push_back(1);
 		v.push_back(2);
-		v.push_back(5);
-
+		v.push_back(3);
+		v.push_back(4);
+		v.push_back(10);
+		sc::MyIterator<int> s(&v[4]);
 	
-	std::cout << v[2] << std::endl;
+	std::cout << v[4] << std::endl;
 
-	 int a [] = {1,2,3,4,5};
-	 v.assign(a[0],a[4]); 
-	std::cout <<  v[3] << std::endl;
+	//int a [] = {5,6,7,8,9};
+	 v.insert(s,{5,6,7,8,9}); 
+	std::cout <<  v[4] << std::endl;
+	std::cout <<  v[5] << std::endl;
+	std::cout <<  v[6] << std::endl;
+	std::cout <<  v[9] << std::endl;
 	std::cout << "\n OK " << std::endl;
 
 	return 0;

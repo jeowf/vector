@@ -1,11 +1,11 @@
 #include <iterator.h>
 
 namespace sc {
-	//construtor inicado com ponteiro nulo
+	//construtor iniciado com ponteiro nulo
 	template <typename T>
 	MyIterator<T>::MyIterator(void) : current(nullptr){ }
 	
-	//construtor inicado com ponteiro não nulo
+	//construtor iniciado com ponteiro não nulo
 	template <typename T>
 	MyIterator<T>::MyIterator(T* ptr) : current(ptr){ }
 

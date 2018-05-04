@@ -50,6 +50,83 @@ namespace sc {
 
         m_storage[m_end++] = value;
     }
+    template <typename T>
+    typename vector<T>::iter vector<T>::insert(iter pos, c_ref value){
+        typename vector<T>::iter temp(pos);
+        size_type cont = 0;
+        if (empty())
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity*2);
+
+        while( temp != iter (&m_storage[0])){
+          temp--;
+          cont++;
+        }
+        for (size_type i = m_end; i > cont; i--)
+            m_storage[i] = m_storage[i - 1];
+        
+
+        m_storage[cont] = value;
+        m_end++;
+
+        return iter(&m_storage[cont]);
+    }
+
+    template <typename T>
+    template <typename InputItr>
+    typename vector<T>::iter vector<T>::insert(iter pos, InputItr first, InputItr last){
+        typename vector<T>::iter temp(pos);
+        size_type cont = 0;
+        size_type array_size =last - first;
+        if (empty())
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity*2);
+
+        while( temp != iter (&m_storage[0])){
+          temp--;
+          cont++;
+        }
+        m_end += array_size;
+        for (size_type i = m_end; i > array_size + cont; i--){
+            m_storage[i] = m_storage[i - array_size - 1];
+        }
+
+        for (size_type j = 0; j < array_size; j++){
+            m_storage[cont+j] = first + j;
+        }
+
+        return iter(&m_storage[cont]);
+    }
+
+    template <typename T>
+    typename vector<T>::iter vector<T>::insert(iter pos, std::initializer_list<T> l){
+    typename vector<T>::iter temp(pos);
+        size_type cont = 0;
+        size_type total = l.size();
+        if (empty())
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity*2);
+
+        size_type a =  pos != iter (&m_storage[0]) ;
+        while( temp != iter (&m_storage[0])){
+          temp--;
+          cont++;
+        }
+        m_end +=total;
+        for (size_type i = m_end; i >total+ cont; i--){
+            m_storage[i - 1] = m_storage[i - total - 1];
+        }
+
+        for (size_type j = 0; j < l.size(); j++){
+            m_storage[cont+j] = *(l.begin()+j);
+        }
+
+        return iter(&m_storage[cont]);
+    }
+
 
     template <typename T>
     void vector<T>::reserve (size_type new_cap){
