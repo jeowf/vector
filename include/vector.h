@@ -4,6 +4,7 @@
 #include <iostream>
 //#include <memory>
 #include <stdexcept>
+#include <initializer_list>
 
 
 #include "iterator.h"
@@ -58,9 +59,9 @@ namespace sc{
         *
         * Initializes move contructor to "steal" the resources held by the argument 
         *
-        *@param arg vector object   
+        *@param other vector object   
         */
-    //  vector (vector &&);
+         vector (vector &&);
 
 
         /*! 
@@ -277,7 +278,7 @@ namespace sc{
         *
         * @param ilist initializer list
         */
-        //void assign (std::initializator_list <T>);
+        void assign (std::initializer_list <T>);
         /*! 
         * @brief Assign
         *
@@ -286,8 +287,8 @@ namespace sc{
         * @param first begin of range
         * @param last end of range
         */
-        //template <typename InputItr>
-        //void assign (InputItr, InputItr);
+        template <typename InputItr>
+        void assign (InputItr, InputItr);
            /*! 
         * @brief Erase
         *

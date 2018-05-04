@@ -24,6 +24,19 @@ namespace sc {
     }
 
     template <typename T>
+    vector<T>::vector(vector && other){
+      m_capacity = other.m_capacity;
+      m_storage = new T[m_capacity];
+      for (size_type i = 0; i < other.m_end; i++){
+        m_storage[i] = std::move(other.m_storage[i]);
+      }
+      m_end = other.m_end;
+      other.assign(0);
+      other.m_capacity = 0;
+      other.m_end = 0;
+    }
+
+    template <typename T>
     bool vector<T>::empty ( void ) const{
         return (m_capacity == 0);
     }
@@ -53,7 +66,7 @@ namespace sc {
 
     template <typename T>
     void vector<T>::shrink_to_fit (void){
-        T* temp = new T[m_capacity - m_end];
+        T* temp = new T[m_end];
 
         for (size_type i = 0; i < m_end; i++)
             temp[i] = m_storage[i];
@@ -61,12 +74,30 @@ namespace sc {
         delete [] m_storage;
 
         m_storage = temp;
-        m_capacity = m_capacity - m_end;
+        m_capacity = m_end;
     }
     template <typename T>
     void vector<T>::assign (c_ref value){
-      for(size_t i = 0; i < m_capacity ; i++){
+      for(size_type i = 0; i < m_capacity ; i++){
           m_storage[i] = value;
+      }
+    }
+
+    template <typename T>
+    void vector<T>::assign (std::initializer_list<T> l){
+      reserve(l.size());
+      for(size_type i = 0;i < l.size(); i++){
+        m_storage[i] = *(l.begin()+i);
+      }
+    }
+
+    template <typename T>
+    template <typename InputItr>
+    void vector<T>::assign (InputItr first, InputItr last){
+      size_type size = last - first;
+      reserve(size);
+      for(size_type i = 0;i < size; i++){
+        m_storage[i] = first+i;
       }
     }
 
