@@ -53,4 +53,16 @@ namespace sc {
 	    return current != rhs.current;
 	}
 
+	template <typename T>
+	typename MyIterator<T>::size_type MyIterator<T>::operator-( const MyIterator& rhs ) {
+	    
+	    return current - rhs.current;
+	}
+
+	template <typename T>
+	MyIterator<T> MyIterator<T>::operator+( const int& rhs ) {
+	    
+	    return current + rhs;
+	}
+
 }

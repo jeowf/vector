@@ -1,6 +1,7 @@
 #ifndef ITERATOR
 #define ITERATOR
 
+#include <iostream>
     /*! @namespace sc
     *
     * @brief Scope of Vector
@@ -17,6 +18,7 @@ namespace sc{
     */
     class MyIterator { 
     public: 
+        using size_type = int;
         /*! @typedef ref
         *
         * @brief Replace all incidences of type MyIterator& to ref
@@ -98,6 +100,10 @@ namespace sc{
         * @return Return true if two iterators points to differentes localization in the list
         */ 
         bool operator!= (const MyIterator &) const; 
+
+        size_type operator-( const MyIterator & );
+
+        MyIterator operator+( const int & );
 
     private: 
         T *current; /*!< Variable to storage the current element in the list */ 

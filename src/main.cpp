@@ -38,6 +38,36 @@ int main(){
 		std::cout << ">>> popped the last element of v\n";
 		std::cout << " v is " << v << " cap = " << v.capacity() << " size = " << v.size()<< std::endl;
 
+		sc::MyIterator<int> x = v.begin();
+		sc::MyIterator<int> y = v.end();
+		std::cout << ">>> testing iterators of v at [begin;end) i.e ";
+
+		std::cout << "[ ";
+		while (x != y){
+			std::cout << *x << " ";
+			x++;
+		}
+		std::cout << "]\n";
+
+		v.clear();
+		std::cout << ">>> clearing v\n";
+		std::cout << " v is " << v << " cap = " << v.capacity() << " size = " << v.size()<< std::endl;
+	}
+
+	{	
+		sc::vector<int> v = {0, 1, 2};
+		std::cout << ">>> created v = [ 0 1 2 ]\n";
+
+		sc::vector<int> x (v.begin(), v.end());
+		std::cout << ">>> created x with values in the iterval [v.begin(), v.end())\n";
+
+		std::cout << " v is " << v << " cap = " << v.capacity() << " size = " << v.size()<< std::endl;
+		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
+
+		x.insert(x.begin() + 1, 3);
+		std::cout << *(x.begin() + 1) << "\n";
+		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
+
 
 
 

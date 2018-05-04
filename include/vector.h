@@ -2,8 +2,8 @@
 #define VECTOR
 
 #include <iostream>
-//#include <memory>
 #include <stdexcept>
+#include <initializer_list>
 
 
 #include "iterator.h"
@@ -36,6 +36,8 @@ namespace sc{
         * Initializes the vector with a empty list 
         */
         vector( void );
+
+        vector( const std::initializer_list<T> il );
         
         /*! 
         * @brief Vector Destructor
@@ -71,9 +73,9 @@ namespace sc{
         *@param first begin of range
         *@param last end of range    
         */
-        //template <typename InputItr>
         
-    //vector ( InputItr, InputItr);
+        template <typename InputItr>
+        vector ( InputItr, InputItr);
 
         /*! 
         * @brief '=' Overload
@@ -106,7 +108,8 @@ namespace sc{
         *
         * @return Returns an iterator pointing to the first item in the list
         */ 
-        //iter begin( void );
+        iter begin( void );
+
         /*! 
         * @brief End
         *
@@ -114,7 +117,8 @@ namespace sc{
         *
         * @return Returns an iterator pointing to the end mark in the list
         */ 
-        //iter end( void );
+        iter end( void );
+
         /*! 
         * @brief Const Begin
         *
@@ -122,7 +126,8 @@ namespace sc{
         *
         * @return Returns a constant iterator pointing to the first item in the list
         */ 
-        //c_iter cbegin( void );
+        c_iter cbegin( void );
+
         /*! 
         * @brief Const End
         *
@@ -130,7 +135,7 @@ namespace sc{
         *
         * @return returns a constant iterator pointing to the end mark in the list
         */  
-        //c_iter cend ( void );
+        c_iter cend ( void );
 
         // CAPACITY
 
@@ -166,7 +171,8 @@ namespace sc{
         *
         * Remove all elements from the container
         */ 
-       // void clear ( void );
+        void clear ( void );
+
         /*! 
         * @brief Push Front
         *
@@ -213,8 +219,7 @@ namespace sc{
         *
         * @return Returns an iterator to the position of the inserted item.
         */
-
-        //iter insert(iter, c_ref);
+        iter insert(iter, c_ref);
 
         /*! 
         * @brief Insert
@@ -263,6 +268,7 @@ namespace sc{
         *
         */
         //void shrink_to_fit ( void );
+
         /*! 
         * @brief Assign
         *
@@ -321,7 +327,8 @@ namespace sc{
         *
         * @return Returns the object at the end of the list.
         */
-        //c_ref back (void) const;
+        c_ref back (void) const;
+
         /*! 
         * @brief Front
         *
@@ -329,7 +336,8 @@ namespace sc{
         *
         * @return Returns the object at the beginning of the list.
         */
-        //c_ref front (void) const;
+        c_ref front (void) const;
+
         /*! 
         * @brief '[]' Overload
         *
@@ -339,8 +347,8 @@ namespace sc{
         *
         * @return Returns the constant object at the index pos in the array,with no bounds-checking.
         */
-
         c_ref operator[] (size_type) const;
+
         /*! 
         * @brief '[]' Overload
         *
@@ -350,8 +358,8 @@ namespace sc{
         *
         * @return Returns the object at the index pos in the array, with no bounds-checking.
         */
-        
         ref operator[] (size_type);
+
         /*! 
         * @brief At
         *
@@ -361,7 +369,8 @@ namespace sc{
         *
         * @return Returns the constant object at the index pos in the array, with bounds-checking.
         */
-        //c_ref at (size_type) const;
+        c_ref at (size_type) const;
+
         /*! 
         * @brief At
         *
@@ -371,8 +380,9 @@ namespace sc{
         *
         * @return Returns the object at the index pos in the array,with  bounds-checking.
         */
-        //ref at (size_type);
-                   /*! 
+        ref at (size_type);
+
+        /*! 
         * @brief Data
         *
         * Debbug
@@ -398,6 +408,7 @@ namespace sc{
         * @return Return true if  two vectors are equals
         */
         //bool operator==(const vector & ) const;
+
         /*! 
         * @brief '!=' Overload
         *
