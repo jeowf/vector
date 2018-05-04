@@ -6,7 +6,7 @@ int main(){
 	//sc::MyIterator<const int> it();
 
 	{
-		std::cout << ">>> ==()\n";
+		std::cout << ">>> FIT()\n";
 
 		sc::vector<int> v;
 		sc::vector<int> s;
@@ -18,11 +18,11 @@ int main(){
 
 		s.push_back(1);
 		s.push_back(2);
-		s.push_back(3);
+		s.push_back(1);
 
-		bool a = s != v;
+ 		v.assign(0);
 
-		std::cout << a << std::endl;
+		std::cout << v[2] << std::endl;
 	}
 	
 

@@ -260,7 +260,7 @@ namespace sc{
         * @param other vector object 
         *
         */
-        //void shrink_to_fit ( void );
+        void shrink_to_fit ( void );
         /*! 
         * @brief Assign
         *
@@ -268,7 +268,7 @@ namespace sc{
         *
         * @param count number os values 
         */
-        //void assign (c_ref);
+        void assign (c_ref);
 
         /*! 
         * @brief Assign

@@ -52,6 +52,25 @@ namespace sc {
     }
 
     template <typename T>
+    void vector<T>::shrink_to_fit (void){
+        T* temp = new T[m_capacity - m_end];
+
+        for (size_type i = 0; i < m_end; i++)
+            temp[i] = m_storage[i];
+        
+        delete [] m_storage;
+
+        m_storage = temp;
+        m_capacity = m_capacity - m_end;
+    }
+    template <typename T>
+    void vector<T>::assign (c_ref value){
+      for(size_t i = 0; i < m_capacity ; i++){
+          m_storage[i] = value;
+      }
+    }
+
+    template <typename T>
     typename vector<T>::c_ref vector<T>::back (void) const{
          return m_storage[m_end - 1];
     }
