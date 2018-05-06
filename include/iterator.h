@@ -2,6 +2,7 @@
 #define ITERATOR
 
 #include <iostream>
+#include <iterator> //distance
     /*! @namespace sc
     *
     * @brief Scope of Vector
@@ -52,6 +53,9 @@ namespace sc{
         * @return Return a reference to the object in the position poited by the iterator
         */
         const T& operator* (void) const;
+
+        T& operator* (void);
+
         /*! 
         * @brief '++' Overload
         *
@@ -108,6 +112,15 @@ namespace sc{
     private: 
         T *current; /*!< Variable to storage the current element in the list */ 
     };
+
+    template <typename T>
+    size_t distance(MyIterator<T> b, MyIterator<T> l){
+        size_t dist = b - l;
+        if (dist < 0)
+            return -1*dist;
+        
+        return dist;
+    }
 }
 
 #include "iterator.inl"

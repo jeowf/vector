@@ -40,8 +40,6 @@ namespace sc {
     template <typename InputItr>
     vector<T>::vector ( InputItr first, InputItr last) {
         size_type s = last - first;
-
-        std::cout << s << std::endl;
         
         m_end = s;
         m_capacity = s;
@@ -176,16 +174,80 @@ namespace sc {
         else if (m_end == m_capacity)
             reserve(m_capacity*2);
 
-        size_type a =  (pos - begin() ) ;
+        iter temp(begin());
+        size_type cont = 0;
 
-        for (size_type i = m_end; i > a; i--)
+        //size_type s = sc::distance(begin(), pos);
+        //std::cout << "OPA: " << s << "   " << *begin() <<", " << *pos <<  std::endl;
+
+        while( temp != pos){
+            std::cout << *temp << std::endl;
+
+            temp++;
+            cont++;
+        }
+
+        for (size_type i = m_end; i > cont; i--)
             m_storage[i] = m_storage[i - 1];
         
-
-        //m_storage[a] = value;
+        m_storage[cont] = value;
         m_end++;
 
-        return iter(&m_storage[a]);
+        return pos;
+    }
+
+    template <typename T>
+    template <typename InputItr>
+    typename vector<T>::iter vector<T>::insert(iter pos, InputItr first, InputItr last){
+        iter temp(pos);
+        size_type cont = 0;
+        size_type array_size =last - first;
+        if (empty())
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity*2);
+
+        while( temp != iter (&m_storage[0])){
+          temp--;
+          cont++;
+        }
+        m_end += array_size;
+        for (size_type i = m_end; i > array_size + cont; i--){
+            m_storage[i] = m_storage[i - array_size - 1];
+        }
+
+        for (size_type j = 0; j < array_size; j++){
+            m_storage[cont+j] = first + j;
+        }
+
+        return iter(&m_storage[cont]);
+    }
+
+    template <typename T>
+    typename vector<T>::iter vector<T>::insert(iter pos, std::initializer_list<T> l){
+    typename vector<T>::iter temp(pos);
+        size_type cont = 0;
+        size_type total = l.size();
+        if (empty())
+            reserve(1);
+        else if (m_end == m_capacity)
+            reserve(m_capacity*2);
+
+        size_type a =  pos != iter (&m_storage[0]) ;
+        while( temp != iter (&m_storage[0])){
+          temp--;
+          cont++;
+        }
+        m_end +=total;
+        for (size_type i = m_end; i >total+ cont; i--){
+            m_storage[i - 1] = m_storage[i - total - 1];
+        }
+
+        for (size_type j = 0; j < l.size(); j++){
+            m_storage[cont+j] = *(l.begin()+j);
+        }
+
+        return iter(&m_storage[cont]);
     }
 
 
@@ -200,6 +262,43 @@ namespace sc {
 
         m_capacity = new_cap;
         m_storage = temp;
+    }
+
+    template <typename T>
+    void vector<T>::shrink_to_fit (void){
+        T* temp = new T[m_end];
+
+        for (size_type i = 0; i < m_end; i++)
+            temp[i] = m_storage[i];
+        
+        delete [] m_storage;
+
+        m_storage = temp;
+        m_capacity = m_end;
+    }
+    template <typename T>
+    void vector<T>::assign (c_ref value){
+      for(size_type i = 0; i < m_capacity ; i++){
+          m_storage[i] = value;
+      }
+    }
+
+    template <typename T>
+    void vector<T>::assign (std::initializer_list<T> l){
+      reserve(l.size());
+      for(size_type i = 0;i < l.size(); i++){
+        m_storage[i] = *(l.begin()+i);
+      }
+    }
+
+    template <typename T>
+    template <typename InputItr>
+    void vector<T>::assign (InputItr first, InputItr last){
+      size_type size = last - first;
+      reserve(size);
+      for(size_type i = 0;i < size; i++){
+        m_storage[i] = first+i;
+      }
     }
 
     template <typename T>
@@ -246,91 +345,34 @@ namespace sc {
         return m_storage[pos];
     }
 
+    template <typename T>
+    bool vector<T>::operator== (const vector & v) const{
+      if( this->m_capacity != v.m_capacity){
+           return false;
+      }else{
+        for (int i = 0; i < this->m_capacity; i++){
+          if (this->m_storage[i] != v.m_storage[i]){
+            return false;
+          } 
+        }
+      }          
+      return true;
+    }
 
+    template <typename T>
+    bool vector<T>::operator!= (const vector & v) const{
+      if( this->m_capacity != v.m_capacity){
+           return true;
+      }else{
+        for (int i = 0; i < this->m_capacity; i++){
+          if (this->m_storage[i] != v.m_storage[i]){
+            return true;
+          } 
+        }
+      }          
+      return false;
+    }
 
-  // vector::vector( const array& original )
-  // {
-  //     // Copy all elements of original into 'this'.
-  //     std::copy( &original.m_data[0], &original.m_data[original.m_size],
-  //                &m_data[0] );
-  //     m_size = original.m_size;
-  // }
-
-  // vector( const std::initializer_list<T> & il )
-  // {
-  //     // Copy all elements of original into 'this'.
-  //     std::copy( il.begin(), il.end(), &m_data[0] );
-  //     /*
-  //     auto i(0);
-  //     for ( const auto & e : il )
-  //         m_data[i++] = e;
-  //         */
-
-  //     m_size = il.size();
-  // }
-
-  // Iterator begin( void )
-  // {
-  //     return Iterator( &m_data[0] );
-  //     //return Iterator( m_data );
-  // }
-
-  // Iterator end( void )
-  // {
-  //     return Iterator( &m_data[m_size] );
-  // }
-
-  // reference operator[]( size_type pos )
-  // {
-  //     return m_data[pos];
-  // }
-  // reference at( size_type pos )
-  // {
-  //     if ( pos < 0 or pos >= m_size )
-  //         throw std::out_of_range("[array::at()] Acesso fora dos limites do vetor." );
-
-  //     return m_data[pos];
-  // }
-
-  // size_type size( void ) const
-  // {
-  //     return m_size;
-  // }
-
-  // bool empty( void ) const
-  // {
-  //     return m_size == 0;
-  //     //return begin() == end();
-  // }
-
-  // bool operator==( const array<T,SIZE>& rhs ) const
-  // {
-  //     if( m_size != rhs.m_size ) return false;
-  //     return std::equal( &rhs.m_data[0], &rhs.m_data[m_size], &m_data[0] );
-  // }
-
-  // // Copy constructor
-  // friend std::ostream& operator<<( std::ostream& os, const sc::array<T,SIZE>& a )
-  // {
-  //     os << "[ ";
-  //     for( auto i(0u) ; i < a.m_size ; ++i )
-  //         //for ( sc::array::Iterator it = a.begin() ; it != a.end() ; ++it )
-  //         // std::cout << *it << " ";
-  //         os << a.m_data[i] << " ";
-  //     os << "]";
-  //     return os;
-  // }
-
-    // VEC_SIG
-    // vector<T, SIZE>::vector( void ) : m_size (SIZE) { }
-
-    // VEC_SIG
-    // vector<T, SIZE>::vector( const vector& original ) {
-    //     // Copy all elements of original into 'this'.
-    //     std::copy( &original.m_data[0], &original.m_data[original.m_size],
-    //                &m_data[0] );
-    //     m_size = original.m_size;
-    // }
 
     template <typename U>
     std::ostream & operator<<( std::ostream & os_, const vector<U> & v_ ){

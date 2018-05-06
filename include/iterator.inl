@@ -14,6 +14,11 @@ namespace sc {
 	const T& MyIterator<T>::operator*( void ) const{
 		return *current;
 	}
+
+	template <typename T>
+	T& MyIterator<T>::operator*( void ) {
+		return *current;
+	}
 	//operador ++ sobrecarregado para pegar o valor do  próximo elemento da lista
 	template <typename T>
 	MyIterator<T> & MyIterator<T>::operator++ (void){
@@ -56,7 +61,7 @@ namespace sc {
 	template <typename T>
 	typename MyIterator<T>::size_type MyIterator<T>::operator-( const MyIterator& rhs ) {
 	    
-	    return current - rhs.current;
+	    return current -rhs.current;
 	}
 
 	template <typename T>

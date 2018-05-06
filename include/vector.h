@@ -232,8 +232,8 @@ namespace sc{
         *
         * @return Returns an iterator to the position of the inserted item
         */
-        //template <typename InputItr>
-        //iter insert(iter, InputItr, InputItr);
+        template <typename InputItr>
+        iter insert(iter, InputItr, InputItr);
 
         /*! 
         * @brief Insert
@@ -246,7 +246,7 @@ namespace sc{
         * @return Returns an iterator to the position of the inserted item
         */
 
-        //iter insert(iter, std::initializator_list <T>);
+        iter insert(iter, std::initializer_list<T>);
 
         /*! 
         * @brief Reserve
@@ -267,7 +267,7 @@ namespace sc{
         * @param other vector object 
         *
         */
-        //void shrink_to_fit ( void );
+        void shrink_to_fit ( void );
 
         /*! 
         * @brief Assign
@@ -276,7 +276,7 @@ namespace sc{
         *
         * @param count number os values 
         */
-        //void assign (c_ref);
+        void assign (c_ref);
 
         /*! 
         * @brief Assign
@@ -285,7 +285,7 @@ namespace sc{
         *
         * @param ilist initializer list
         */
-        //void assign (std::initializator_list <T>);
+        void assign (std::initializer_list<T>);
         /*! 
         * @brief Assign
         *
@@ -294,8 +294,8 @@ namespace sc{
         * @param first begin of range
         * @param last end of range
         */
-        //template <typename InputItr>
-        //void assign (InputItr, InputItr);
+        template <typename InputItr>
+        void assign (InputItr, InputItr);
            /*! 
         * @brief Erase
         *
@@ -407,7 +407,7 @@ namespace sc{
         *
         * @return Return true if  two vectors are equals
         */
-        //bool operator==(const vector & ) const;
+        bool operator==(const vector & ) const;
 
         /*! 
         * @brief '!=' Overload
@@ -418,7 +418,7 @@ namespace sc{
         *
         * @return Return true if  two vectors are differents
         */
-        //bool operator!=(const vector & ) const;
+        bool operator!=(const vector & ) const;
 
         // FRIEND FUNCTIONS
 
@@ -455,6 +455,7 @@ namespace sc{
         T *m_storage;/*!< Variable to storage the values */ 
 
     };
+
 }
 
 #include "vector.inl"
