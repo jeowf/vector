@@ -169,37 +169,32 @@ namespace sc {
 
     template <typename T>
     typename vector<T>::iter vector<T>::insert(iter pos, c_ref value){
+        typename vector<T>::iter temp = iter (&m_storage[0]);
+        size_type cont = 0;
         if (empty())
             reserve(1);
         else if (m_end == m_capacity)
             reserve(m_capacity*2);
 
-        iter temp(begin());
-        size_type cont = 0;
-
-        //size_type s = sc::distance(begin(), pos);
-        //std::cout << "OPA: " << s << "   " << *begin() <<", " << *pos <<  std::endl;
-
         while( temp != pos){
-            std::cout << *temp << std::endl;
-
-            temp++;
-            cont++;
+          temp++;
+          cont++;
         }
-
-        for (size_type i = m_end; i > cont; i--)
+        for (size_type i = m_end; i > cont; i--){
             m_storage[i] = m_storage[i - 1];
+        }
         
+
         m_storage[cont] = value;
         m_end++;
 
-        return pos;
+        return iter(&m_storage[cont]);
     }
 
     template <typename T>
     template <typename InputItr>
     typename vector<T>::iter vector<T>::insert(iter pos, InputItr first, InputItr last){
-        iter temp(pos);
+        typename vector<T>::iter temp = iter (&m_storage[0]);
         size_type cont = 0;
         size_type array_size =last - first;
         if (empty())
@@ -207,8 +202,8 @@ namespace sc {
         else if (m_end == m_capacity)
             reserve(m_capacity*2);
 
-        while( temp != iter (&m_storage[0])){
-          temp--;
+        while( temp != pos){
+          temp++;
           cont++;
         }
         m_end += array_size;
@@ -225,7 +220,7 @@ namespace sc {
 
     template <typename T>
     typename vector<T>::iter vector<T>::insert(iter pos, std::initializer_list<T> l){
-    typename vector<T>::iter temp(pos);
+    typename vector<T>::iter temp = iter (&m_storage[0]);
         size_type cont = 0;
         size_type total = l.size();
         if (empty())
@@ -234,8 +229,8 @@ namespace sc {
             reserve(m_capacity*2);
 
         size_type a =  pos != iter (&m_storage[0]) ;
-        while( temp != iter (&m_storage[0])){
-          temp--;
+        while( temp != pos){
+          temp++;
           cont++;
         }
         m_end +=total;
