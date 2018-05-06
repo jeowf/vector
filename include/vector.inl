@@ -197,36 +197,44 @@ namespace sc {
         typename vector<T>::iter temp = iter (&m_storage[0]);
         size_type cont = 0;
         size_type array_size =last - first;
+
+        std::cout << array_size <<"\n";
+
         if (empty())
-            reserve(1);
-        else if (m_end == m_capacity)
+            reserve(array_size);
+        else if ((m_end + array_size) >= m_capacity)
             reserve(m_capacity*2);
 
         while( temp != pos){
           temp++;
           cont++;
         }
+
         m_end += array_size;
+        
         for (size_type i = m_end; i > array_size + cont; i--){
             m_storage[i] = m_storage[i - array_size - 1];
         }
 
         for (size_type j = 0; j < array_size; j++){
-            m_storage[cont+j] = first + j;
+            m_storage[cont+j] = *(first + j);
         }
+
+        //m_end += array_size;
 
         return iter(&m_storage[cont]);
     }
 
     template <typename T>
     typename vector<T>::iter vector<T>::insert(iter pos, std::initializer_list<T> l){
-    typename vector<T>::iter temp = iter (&m_storage[0]);
+        typename vector<T>::iter temp = iter (&m_storage[0]);
         size_type cont = 0;
         size_type total = l.size();
+
         if (empty())
             reserve(1);
-        else if (m_end == m_capacity)
-            reserve(m_capacity*2);
+        else if (m_end + total >= m_capacity)
+            reserve(m_capacity + total);
 
         size_type a =  pos != iter (&m_storage[0]) ;
         while( temp != pos){

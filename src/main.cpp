@@ -54,6 +54,8 @@ int main(){
 		std::cout << " v is " << v << " cap = " << v.capacity() << " size = " << v.size()<< std::endl;
 	}
 
+	std::cout << std::endl;
+
 	{	
 		sc::vector<int> v = {0, 1, 2};
 		std::cout << ">>> created v = [ 0 1 2 ]\n";
@@ -74,16 +76,11 @@ int main(){
 		std::cout << " v is " << v << " cap = " << v.capacity() << " size = " << v.size()<< std::endl;
 
 		x.insert(x.begin() + 1, v.begin(), v.end());
-		std::cout << "inserted " << v << "at position 1 in v\n";
+		std::cout << "inserted " << v << " at position 1 in v\n";
 		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
-		
-
-
-
-
-
 
 	}
+
 
 	return 0;
 }
