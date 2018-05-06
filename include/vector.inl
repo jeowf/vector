@@ -34,6 +34,9 @@ namespace sc {
         std::copy( &other.m_storage[0], &other.m_storage[other.m_end],
                  &m_storage[0] );
         m_end = other.m_end;
+        m_capacity = other.m_capacity;
+
+        std::cout << "ta wolf\n";
     }
 
     template <typename T> 
@@ -57,8 +60,10 @@ namespace sc {
     vector<T>& vector<T>::operator= (const vector & rhs){
         reserve(rhs.m_capacity);
 
-        for (size_type i = 0; i < m_capacity; i++)
-            m_storage[i] = rhs.m_storage[i];
+        m_end = rhs.m_end;
+        std::copy(&rhs.m_storage[0], &rhs.m_storage[m_end], &m_storage);
+        // for (size_type i = 0; i < m_capacity; i++)
+        //     m_storage[i] = rhs.m_storage[i];
 
         return *this;
     }
@@ -67,8 +72,8 @@ namespace sc {
     vector<T>& vector<T>::operator= (vector & rhs){
         reserve(rhs.m_capacity);
 
-        for (size_type i = 0; i < m_capacity; i++)
-            m_storage[i] = rhs.m_storage[i];
+        m_end = rhs.m_end;
+        std::copy(&rhs.m_storage[0], &rhs.m_storage[m_end], &m_storage);
 
         return *this;
     }
@@ -198,8 +203,6 @@ namespace sc {
         size_type cont = 0;
         size_type array_size =last - first;
 
-        std::cout << array_size <<"\n";
-
         if (empty())
             reserve(array_size);
         else if ((m_end + array_size) >= m_capacity)
@@ -305,6 +308,51 @@ namespace sc {
     }
 
     template <typename T>
+    typename vector<T>::iter vector<T>::erase(iter first,iter last){
+        typename vector<T>::iter temp = iter (&m_storage[0]);
+        size_type cont = 0;
+        size_type array_size = last - first;
+
+        while( temp != first){
+            temp++;
+            cont++;
+        }
+
+        for (size_type j = 0; j < array_size; j++)
+            m_storage[cont+j].~T();
+        
+        for (size_type i = cont; i < cont+array_size ; i++)
+            m_storage[i] = m_storage[i + array_size];
+        
+        m_end -= array_size;
+
+        return iter(&m_storage[m_end]);
+    }
+
+    template <typename T>
+    typename vector<T>::iter vector<T>::erase(iter pos){
+        typename vector<T>::iter temp = iter (&m_storage[0]);
+        size_type cont = 0;
+
+        while( temp != pos){
+          temp++;
+          cont++;
+        }
+
+        m_storage[cont].~T();
+
+        for (size_type i = cont; i < m_end; i++){
+            m_storage[i] = m_storage[i + 1];
+        }
+        
+        m_end--;
+
+        return iter(&m_storage[m_end]);
+    }
+
+
+
+    template <typename T>
     typename vector<T>::c_ref vector<T>::back (void) const{
          return m_storage[m_end - 1];
     }
@@ -331,7 +379,7 @@ namespace sc {
             throw std::runtime_error("Vector is empty");
       
         else if(pos < 0 or pos > m_end)
-            throw std::runtime_error("Index out of range");
+            throw std::out_of_range("Index out of range");
       
         return m_storage[pos];
       
@@ -343,7 +391,7 @@ namespace sc {
             throw std::runtime_error("Vector is empty");
 
         else if(pos < 0 or pos > m_end)
-            throw std::runtime_error("Index out of range");
+            throw std::out_of_range("Index out of range");
 
         return m_storage[pos];
     }
@@ -389,5 +437,17 @@ namespace sc {
 
     }
 
-            
+    template <typename T>
+    void swap( vector<T> & first_, vector<T> & second_ ){
+        std::cout<<"1\n";
+        vector<T> temp (first_.begin(), first_.end());
+
+        std::cout<< temp <<"2\n";
+
+        first_ = second_;
+
+        std::cout<<"3\n";
+
+        //second_ = temp;
+    } 
 }

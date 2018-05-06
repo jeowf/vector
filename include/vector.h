@@ -18,7 +18,7 @@ namespace sc{
     class vector{
     	
     public:
-        using size_type = size_t;                   /*!< aaaa */
+        using size_type = size_t;                   /*!< Type of size */
 
         const static size_type DEFAULT_SIZE = 0;    /*!< Variable to storage the default size of vector */ 
 
@@ -37,6 +37,11 @@ namespace sc{
         */
         vector( void );
 
+        /*! 
+        * @brief Vector Constructor
+        *
+        * Initializes the vector with a list 
+        */
         vector( const std::initializer_list<T> il );
         
         /*! 
@@ -306,7 +311,7 @@ namespace sc{
         *
         * @return Return the iterator for the next element valid
         */
-       // iter erase(iter, iter);
+        iter erase(iter, iter);
                    /*! 
         * @brief Erase
         *
@@ -316,7 +321,7 @@ namespace sc{
         *
         * @return Returns an iterator to the element that follows pos before the call.
         */
-        //iter erase (iter);
+        iter erase (iter);
 
         // ELEMENT ACCESS
 
@@ -447,7 +452,7 @@ namespace sc{
         * @return Return true if  two vectors are differents
         */ 
 
-        //friend void swap( vector<T> & first_, vector<T> & second_ ); 
+        friend void swap( vector<T> & first_, vector<T> & second_ ); 
 
     private:
         size_type m_end;/*!< Variable to storage the end of vector */ 

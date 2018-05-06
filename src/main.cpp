@@ -67,20 +67,27 @@ int main(){
 		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
 
 		x.insert(x.begin() + 1, 3);
-		std::cout << "inserted 3 at position 1 in x\n";
+		std::cout << ">>> inserted 3 at position 1 in x\n";
 		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
 
 
 		v.insert(v.begin() + 2, { 4,5,6 });
-		std::cout << "inserted [ 4 5 6 ] at position 2 in v\n";
+		std::cout << ">>> inserted [ 4 5 6 ] at position 2 in v\n";
 		std::cout << " v is " << v << " cap = " << v.capacity() << " size = " << v.size()<< std::endl;
 
 		x.insert(x.begin() + 1, v.begin(), v.end());
-		std::cout << "inserted " << v << " at position 1 in v\n";
+		std::cout << ">>> inserted " << v << " at position 1 in v\n";
+		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
+
+		x.erase(x.begin() + 1);
+		std::cout << ">>> erased at position 1 in x\n";
+		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
+
+		x.erase(x.begin() + 1, x.begin() + 5);
+		std::cout << ">>> erased from position 1 to 4 in x\n";
 		std::cout << " x is " << x << " cap = " << x.capacity() << " size = " << x.size()<< std::endl;
 
 	}
-
 
 	return 0;
 }
