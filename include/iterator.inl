@@ -9,12 +9,12 @@ namespace sc {
 	template <typename T>
 	MyIterator<T>::MyIterator(T* ptr) : current(ptr){ }
 
-	//operador * sobrecarregado para pegar o valor do elemento atual da lista
+	//operador * sobrecarregado para pegar o valor do elemento atual da lista sem alterá-lo
 	template <typename T>
 	const T& MyIterator<T>::operator*( void ) const{
 		return *current;
 	}
-
+	//operador * sobrecarregado para pegar o valor do elemento atual da lista
 	template <typename T>
 	T& MyIterator<T>::operator*( void ) {
 		return *current;
@@ -57,13 +57,13 @@ namespace sc {
 	bool MyIterator<T>::operator!=( const MyIterator& rhs ) const {
 	    return current != rhs.current;
 	}
-
+	//operador - sobrecarregado para pegar a diferença entre dois iteradores
 	template <typename T>
 	typename MyIterator<T>::size_type MyIterator<T>::operator-( const MyIterator& rhs ) {
 	    
 	    return current -rhs.current;
 	}
-
+	//operador + sobrecarregado para incrementar a posĩção de um iterador
 	template <typename T>
 	MyIterator<T> MyIterator<T>::operator+( const int& rhs ) {
 	    

@@ -48,12 +48,18 @@ namespace sc{
         /*! 
         * @brief '*' Overload
         *
+        * Overload '*' operator to take the current element const in list
+        *
+        * @return Return a const reference to the object in the position poited by the iterator
+        */
+        const T& operator* (void) const;
+        /*! 
+        * @brief '*' Overload
+        *
         * Overload '*' operator to take the current element in list
         *
         * @return Return a reference to the object in the position poited by the iterator
         */
-        const T& operator* (void) const;
-
         T& operator* (void);
 
         /*! 
@@ -104,23 +110,27 @@ namespace sc{
         * @return Return true if two iterators points to differentes localization in the list
         */ 
         bool operator!= (const MyIterator &) const; 
-
+        /*! 
+        * @brief '-' Overload
+        *
+        * Overload '-' operator to verify the diference beetwen two iterators
+        *
+        * @return Return the diference beetwen two iterators
+        */
         size_type operator-( const MyIterator & );
-
+        /*! 
+        * @brief '+' Overload
+        *
+        * Overload '+' operator to increse a iterator position
+        *
+        * @return Return the iterator position with increase position
+        */
         MyIterator operator+( const int & );
 
     private: 
         T *current; /*!< Variable to storage the current element in the list */ 
     };
 
-    template <typename T>
-    size_t distance(MyIterator<T> b, MyIterator<T> l){
-        size_t dist = b - l;
-        if (dist < 0)
-            return -1*dist;
-        
-        return dist;
-    }
 }
 
 #include "iterator.inl"

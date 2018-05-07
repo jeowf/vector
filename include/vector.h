@@ -63,16 +63,6 @@ namespace sc{
         /*! 
         * @brief Vector Constructor
         *
-        * Initializes move contructor to "steal" the resources held by the argument 
-        *
-        *@param arg vector object   
-        */
-    //  vector (vector &&);
-
-
-        /*! 
-        * @brief Vector Constructor
-        *
         * Initializes contructor with the content of the range [first, last)
         *
         *@param first begin of range
@@ -387,21 +377,6 @@ namespace sc{
         */
         ref at (size_type);
 
-        /*! 
-        * @brief Data
-        *
-        * Debbug
-        *
-        */
-        //pointer data ( void ); //qm é pointer
-                   /*! 
-        * @brief Data
-        *
-        * Debbug
-        *
-        */
-        //c_ref data (void) const;
-
         // OPERATORS
         /*! 
         * @brief '==' Overload
@@ -440,19 +415,6 @@ namespace sc{
 
         template <typename U>
         friend std::ostream & operator<<( std::ostream & os_, const vector<T> & v_ );
-
-        /*! 
-        * @brief Swap
-        *
-        * Reverses the position of two elements of the vector
-        *
-        * @param first vector element
-        * @param second vector element
-        *
-        * @return Return true if  two vectors are differents
-        */ 
-
-        friend void swap( vector<T> & first_, vector<T> & second_ ); 
 
     private:
         size_type m_end;/*!< Variable to storage the end of vector */ 

@@ -2,37 +2,42 @@
 
 namespace sc {
 
+    //contrutor padrão
     template <typename T>
+    //inicia com valores default
     vector<T>::vector( void ) : m_end(DEFAULT_SIZE), 
                                 m_capacity(DEFAULT_SIZE), 
                                 m_storage(new T[DEFAULT_SIZE]) { }
 
+
+    //contrutor iniciado com os elementos de uma lista
     template <typename T>
     vector<T>::vector( const std::initializer_list<T> il ) : m_end(il.size()), 
                                                              m_capacity(il.size()), 
                                                              m_storage(new T[il.size()]){
-        //reserve(il.size());
-
-        // Copy all elements of original into 'this'.
+        //copia os elementos da lista para vetor
         std::copy( il.begin(), il.end(), &m_storage[0] );
 
-        //m_end = il.size();
     }
 
-    
+    //destrutor para deslocar um objeto vector    
     template <typename T>
     vector<T>::~vector( void ){
+        //percorre os elementos do vetor
         for (size_type i = 0; i < m_capacity; i++)
+            //desaloca os elementos
             m_storage[i].~T();
-
+        //deleta a lista vazia da memória
         delete [] m_storage;
     }
 
+    //construto cópia
     template <typename T>
     vector<T>::vector( const vector& other ) {
-        // Copy all elements of other into 'this'.
+        // Copia todos os elementos de 'other' para o novo vetor
         std::copy( &other.m_storage[0], &other.m_storage[other.m_end],
                  &m_storage[0] );
+        //copia o ultimo elemento e a capacidade de 'other'
         m_end = other.m_end;
         m_capacity = other.m_capacity;
 
@@ -437,17 +442,4 @@ namespace sc {
 
     }
 
-    template <typename T>
-    void swap( vector<T> & first_, vector<T> & second_ ){
-        std::cout<<"1\n";
-        vector<T> temp (first_.begin(), first_.end());
-
-        std::cout<< temp <<"2\n";
-
-        first_ = second_;
-
-        std::cout<<"3\n";
-
-        //second_ = temp;
-    } 
 }
